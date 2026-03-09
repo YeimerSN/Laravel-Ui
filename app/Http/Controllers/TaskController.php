@@ -7,12 +7,16 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $task = Task::latest()->get();
+        $tasks = Task::latest()->get();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -31,12 +35,12 @@ class TaskController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'content' => 'required',
+            'detail' => 'required',
         ]);
 
-        Task::create($request->only('title', 'content'));
+        Task::create($request->only('title', 'detail'));
 
-        return redirect()->route('tasks.index')-with('sucess', 'Tarea creada exitosamente!');
+        return redirect()->route('tasks.index')->with('success', 'Tarea creada exitosamente!');
     }
 
     /**
@@ -63,13 +67,13 @@ class TaskController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'content' => 'required',
+            'detail' => 'required',
         ]);
 
-        $tasks = Tasks::findOrFail($id);
-        $tasks->update($request->only('title', 'content'));
+        $tasks = Task::findOrFail($id);
+        $tasks->update($request->only('title', 'detail'));
 
-        return redirect()->route('tasks.index')-with('sucess', 'Tarea actualizada exitosamente!');
+        return redirect()->route('tasks.index')->with('success', 'Tarea actualizada exitosamente!');
     }
 
     /**
@@ -80,6 +84,6 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return redirect()->route('tasks.index')-with('sucess', 'Tarea eliminada exitosamente!');
+        return redirect()->route('tasks.index')->with('sucess', 'Tarea eliminada exitosamente!');
     }
 }
