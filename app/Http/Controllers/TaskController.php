@@ -38,7 +38,9 @@ class TaskController extends Controller
             'detail' => 'required',
         ]);
 
-        Task::create($request->only('title', 'detail'));
+        $request->user()->tasks()->create($request->only('title', 'detail'));
+
+        //Task::create($request->only('title', 'detail'));
 
         return redirect()->route('tasks.index')->with('success', 'Tarea creada exitosamente!');
     }
@@ -48,6 +50,7 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
+        $tasks = Task::findOrFail($id);
         return view('tasks.show', compact('tasks'));
     }
 
@@ -57,6 +60,7 @@ class TaskController extends Controller
     public function edit(string $id)
     {
         $tasks = Task::findOrFail($id);
+        $this->authorize('update', $tasks);
         return view('tasks.edit', compact('tasks'));
     }
 
@@ -71,6 +75,7 @@ class TaskController extends Controller
         ]);
 
         $tasks = Task::findOrFail($id);
+        $this->authorize('update', $tasks);
         $tasks->update($request->only('title', 'detail'));
 
         return redirect()->route('tasks.index')->with('success', 'Tarea actualizada exitosamente!');
@@ -82,6 +87,7 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         $task = Task::findOrFail($id);
+        $this->authorize('update', $task);
         $task->delete();
 
         return redirect()->route('tasks.index')->with('sucess', 'Tarea eliminada exitosamente!');

@@ -10,13 +10,17 @@
                 <h5 class="card-title"> {{ $task->title }}</h5>
                 <p class="card-text">{{ Str::limit($task->detail, 200) }}</p>
                 <a href="{{ route('tasks.show', $task) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                <a href="{{ route('tasks.edit', $task) }}" class="btn btn-sm btn-warning">Editar</a>
+                @can('update', $task)
+                    <a href="{{ route('tasks.edit', $task) }}" class="btn btn-sm btn-warning">Editar</a>
+                @endcan
                 
-                <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar tarea?');">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-sm btn-danger">Eliminar</button>
-                </form>
+                @can('delete', $task)
+                    <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar tarea?');">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                @endcan
             </div>
         </div>
     @endforeach
