@@ -1,45 +1,45 @@
 @extends ('layouts.app')
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Lista de tareas</h1>
-        @can('create', App\Models\Task::class)
-            <a href="{{ route('tasks.create') }}" class="btn btn-primary">Crear tarea</a>
+        <h1>Listado de usarios</h1>
+        @can('create', App\Models\User::class)
+            <a href="{{ route('users.create') }}" class="btn btn-primary">Crear usuario</a>
         @endcan
     </div>
     <table class="table table-striped">
         <thead>
             <tr>
             <th scope="col">#</th>
-            <th scope="col">Titulo</th>
-            <th scope="col">Detalle de la tarea</th>
-            <th scope="col">Estado</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Rol</th>
             <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($tasks as $task)
+            @foreach($users as $user)
                 <tr>
-                    <th scope="row">{{ $task->id }}</th>
-                    <td>{{ $task->title }}</td>
-                    <td>{{ $task->detail }}</td>
+                    <th scope="row">{{ $user->id }}</th>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
                     <td>
-                        <span class="badge {{ $task->is_completed ? 'bg-success' : 'bg-secondary' }}">
-                            {{ $task->is_completed ? 'Completada' : 'Pendiente' }}
-                        </span>
+                        @foreach($user->getRoleLabels() as $label)
+                            <span>{{ $label }}</span>
+                        @endforeach
                     </td>
                     <td>
-                        @can('view', $task)
-                            <a href="{{ route('tasks.show', $task) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
+                        @can('view', $user)
+                            <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-secondary">Ver</a>
                         @endcan
-                        @can('update', $task)
-                            <a href="{{ route('tasks.edit', $task) }}" class="btn btn-sm btn-warning">Editar</a>
+                        @can('update', $user)
+                            <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Editar</a>
                         @endcan
-                        @can('delete', $task)
+                        @can('delete', $user)
                             <button type="button" 
-                                class="btn btn-sm btn-danger" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#confirmDeleteModal" 
-                                data-action="{{ route('tasks.destroy', $task->id) }}">
+                                    class="btn btn-sm btn-danger" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#confirmDeleteModal" 
+                                    data-action="{{ route('users.destroy', $user->id) }}">
                                 Eliminar
                             </button>
                         @endcan
@@ -47,7 +47,7 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table>    
 
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -57,7 +57,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar esta tarea? Esta acción no se puede deshacer.
+                    ¿Estás seguro de que deseas eliminar a este usuario? Esta acción no se puede deshacer.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

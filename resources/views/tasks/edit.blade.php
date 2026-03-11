@@ -21,5 +21,6 @@
             <textarea name="detail" rows="6" class="form-control">{{ old('content', $tasks->detail) }}</textarea>
         </div>
         <button class="btn btn-primary">Actualizar</button>
+        <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 @endsection

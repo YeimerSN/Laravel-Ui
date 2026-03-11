@@ -51,4 +51,10 @@ class User extends Authenticatable
     public function tasks(){
         return $this->hasMany(Task::class);
     }
+
+    public function getRoleLabels()
+    {
+        return $this->getRoleNames()->map(fn($name) => 
+            \App\Enums\RoleType::tryFrom($name)?->roleLabel() ?? $name);
+    }
 }

@@ -1,6 +1,6 @@
 @extends ('layouts.app')
 @section('content')
-    <h1>Create Post</h1>
+    <h1>Create Tarea</h1>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -17,9 +17,10 @@
             <input name="title" class="form-control" value="{{ old('title') }}">
         </div>
         <div class="mb-3">
-            <label class="form-label">Contenido</label>
+            <label class="form-label">Detalle de la tarea</label>
             <textarea name="detail" rows="6" class="form-control">{{ old('detail') }}</textarea>
         </div>
         <button class="btn btn-primary">Guardar</button>
+        <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 @endsection

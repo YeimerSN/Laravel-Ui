@@ -20,12 +20,19 @@ class RolesAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'create tasks']);
         Permission::create(['name' => 'edit tasks']); 
         Permission::create(['name' => 'delete tasks']);
+        Permission::create(['name' => 'view tasks']);
+
+        Permission::create(['name' => 'create users']);
+        Permission::create(['name' => 'edit users']); 
+        Permission::create(['name' => 'delete users']);
+        Permission::create(['name' => 'view users']);
 
         $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(Permission::all());
         
         $editor = Role::create(['name' => 'editor']); 
-        $editor->givePermissionTo(['create tasks', 'edit tasks']);
+        $editor->givePermissionTo(['create tasks', 'edit tasks', 'delete tasks', 'view tasks']);
         $user = Role::create(['name' => 'user']);
+        $user->givePermissionTo(['view tasks']);
     }
 }

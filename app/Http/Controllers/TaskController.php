@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::latest()->get();
+        $tasks = Task::all();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -87,7 +87,7 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         $task = Task::findOrFail($id);
-        $this->authorize('update', $task);
+        $this->authorize('delete', $task);
         $task->delete();
 
         return redirect()->route('tasks.index')->with('sucess', 'Tarea eliminada exitosamente!');

@@ -10,16 +10,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', function(){
+    $user = auth()->user();
+
+    if($user->hasRole('admin')){
+        return redirect()->route('users.index');
+    }
+    
     return redirect()->route('tasks.index');
 })->name('home');
 
 
 Route::middleware('auth')->group(function (){
     Route::resource('tasks', App\Http\Controllers\TaskController::class);
+    Route::resource('users', App\Http\Controllers\UserController::class);
 });
-/*Route::get('/', function(){
-    return redirect()->route('tasks.index');
-});*/
-
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
