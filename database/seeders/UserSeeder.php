@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Users to populate the table users
         $admin = User::create([
             'name'     => 'Admin',
             'email'    => 'admin@admin.com',

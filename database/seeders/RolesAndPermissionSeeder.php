@@ -27,11 +27,15 @@ class RolesAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'delete users']);
         Permission::create(['name' => 'view users']);
 
+        // Crate role admin and add permissions
         $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(Permission::all());
         
+        // Create role editor and add permissions
         $editor = Role::create(['name' => 'editor']); 
         $editor->givePermissionTo(['create tasks', 'edit tasks', 'delete tasks', 'view tasks']);
+
+        // Create role user and add permissions
         $user = Role::create(['name' => 'user']);
         $user->givePermissionTo(['view tasks']);
     }

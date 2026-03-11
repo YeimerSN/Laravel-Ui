@@ -13,6 +13,7 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
+        // Task to test the app
         Task::create([
             'title' => 'Configurar servidor de correo',
             'detail' => 'Establecer los protocolos SMTP para las notificaciones del sistema.',
