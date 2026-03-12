@@ -25,6 +25,7 @@ class TaskController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', App\Models\Task::class);
         return view('tasks.create');
     }
 
